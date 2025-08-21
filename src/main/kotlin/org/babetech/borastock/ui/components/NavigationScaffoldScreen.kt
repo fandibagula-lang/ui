@@ -94,16 +94,24 @@ fun NavigationScaffoldScreen(
             NavigationSuiteScaffold(
                 modifier = Modifier.padding(innerPadding),
                 layoutType = layoutType,
+                containerColor = MaterialTheme.colorScheme.surface,
                 navigationSuiteItems = {
                     destinationsToShow.forEach { dest ->
                         item(
                             selected = currentDestination == dest,
                             onClick = { onDestinationChanged(dest) },
                             icon = {
-                                NavigationIcon(
-                                    destination = dest,
-                                    isSelected = currentDestination == dest
-                                )
+                                Box(
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .padding(horizontal = 8.dp, vertical = 4.dp),
+                                    contentAlignment = Alignment.Center
+                                ) {
+                                    NavigationIcon(
+                                        destination = dest,
+                                        isSelected = currentDestination == dest
+                                    )
+                                }
                             },
                             label = {
                                 if (layoutType != NavigationSuiteType.NavigationBar) {
@@ -111,18 +119,25 @@ fun NavigationScaffoldScreen(
                                         visible = true,
                                         enter = fadeIn() + slideInHorizontally()
                                     ) {
-                                        Text(
-                                            text = dest.label,
-                                            style = MaterialTheme.typography.labelMedium.copy(
-                                                fontWeight = if (currentDestination == dest) 
-                                                    FontWeight.Bold else FontWeight.Medium
-                                            ),
-                                            color = if (currentDestination == dest)
-                                                MaterialTheme.colorScheme.primary
-                                            else MaterialTheme.colorScheme.onSurface,
-                                            maxLines = 1,
-                                            overflow = TextOverflow.Ellipsis
-                                        )
+                                        Box(
+                                            modifier = Modifier
+                                                .fillMaxWidth()
+                                                .padding(horizontal = 8.dp),
+                                            contentAlignment = Alignment.Center
+                                        ) {
+                                            Text(
+                                                text = dest.label,
+                                                style = MaterialTheme.typography.labelMedium.copy(
+                                                    fontWeight = if (currentDestination == dest)
+                                                        FontWeight.Bold else FontWeight.Medium
+                                                ),
+                                                color = if (currentDestination == dest)
+                                                    MaterialTheme.colorScheme.primary
+                                                else MaterialTheme.colorScheme.onSurface.copy(alpha = 0.8f),
+                                                maxLines = 1,
+                                                overflow = TextOverflow.Ellipsis
+                                            )
+                                        }
                                     }
                                 }
                             }
